@@ -51,7 +51,7 @@ namespace MotoLand.Pages.Motorcycles
             }
             if (await TryUpdateModelAsync<Motorcycle>(
             newMoto,
-            "Moto",
+            "Motorcycle",
             i => i.brand, i => i.model,
             i => i.price, i => i.year, i => i.DealerID))
             {

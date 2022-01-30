@@ -46,7 +46,7 @@ namespace MotoLand.Models
                         motoToUpdate.MotoCategories.Add(
                         new MotoCategory
                         {
-                            MotoID = motoToUpdate.ID,
+                            MotorcycleID = motoToUpdate.ID,
                             CategoryID = cat.ID
                         });
                     }

@@ -40,7 +40,9 @@ namespace MotoLand.Pages.Motorcycles
             {
                 return NotFound();
             }
-           ViewData["DealerID"] = new SelectList(_context.Set<DealerMoto>(), "ID", "Name");
+            PopulateAssignedCategoryData(_context, Motorcycle);
+
+            ViewData["DealerID"] = new SelectList(_context.Set<DealerMoto>(), "ID", "Name");
             return Page();
         }
 
@@ -63,7 +65,7 @@ namespace MotoLand.Pages.Motorcycles
             }
             if (await TryUpdateModelAsync<Motorcycle>(
             motoToUpdate,
-            "Moto",
+            "Motorcycle",
             i => i.brand, i => i.model,
             i => i.price, i => i.year, i => i.DealerMoto))
             {
