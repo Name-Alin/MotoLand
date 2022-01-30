@@ -1,0 +1,49 @@
+﻿@page
+@model MotoLand.Pages.Motorcycles.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Motorcycle</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Motorcycle.brand)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Motorcycle.brand)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Motorcycle.model)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Motorcycle.model)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Motorcycle.year)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Motorcycle.year)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Motorcycle.price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Motorcycle.price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Motorcycle.DealerMoto)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Motorcycle.DealerMoto.ID)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Motorcycle.ID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

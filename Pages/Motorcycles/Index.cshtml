@@ -1,0 +1,60 @@
+﻿@page
+@model MotoLand.Pages.Motorcycles.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Motorcycle[0].brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Motorcycle[0].model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Motorcycle[0].year)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Motorcycle[0].price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Motorcycle[0].DealerMoto)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Motorcycle) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.brand)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DealerMoto.ID)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

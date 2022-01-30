@@ -1,0 +1,53 @@
+﻿@page
+@model MotoLand.Pages.Motorcycles.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Motorcycle</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Motorcycle.brand" class="control-label"></label>
+                <input asp-for="Motorcycle.brand" class="form-control" />
+                <span asp-validation-for="Motorcycle.brand" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Motorcycle.model" class="control-label"></label>
+                <input asp-for="Motorcycle.model" class="form-control" />
+                <span asp-validation-for="Motorcycle.model" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Motorcycle.year" class="control-label"></label>
+                <input asp-for="Motorcycle.year" class="form-control" />
+                <span asp-validation-for="Motorcycle.year" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Motorcycle.price" class="control-label"></label>
+                <input asp-for="Motorcycle.price" class="form-control" />
+                <span asp-validation-for="Motorcycle.price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Motorcycle.DealerID" class="control-label"></label>
+                <select asp-for="Motorcycle.DealerID" class ="form-control" asp-items="ViewBag.DealerID"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
