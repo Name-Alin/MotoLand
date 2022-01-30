@@ -1,14 +1,14 @@
-﻿@page
+﻿@page "/"
 @model MotoLand.Pages.Motorcycles.IndexModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Motorcycles</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create">Add New Motorcycle</a>
 </p>
 <table class="table">
     <thead>
@@ -28,12 +28,21 @@
             <th>
                 @Html.DisplayNameFor(model => model.Motorcycle[0].DealerMoto)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Motorcycle[0].MotoCategories)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Motorcycle) {
-        <tr>
+
+@foreach (var item in Model.Moto.Moto) {
+    string selectedRow = "";
+    if (item.ID == Model.MotoID)
+    {
+        selectedRow = "table-success";
+    }
+        <tr class="@selectedRow">
             <td>
                 @Html.DisplayFor(modelItem => item.brand)
             </td>
@@ -47,11 +56,18 @@
                 @Html.DisplayFor(modelItem => item.price)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DealerMoto.ID)
+                @Html.DisplayFor(modelItem => item.DealerMoto.Name)
+            </td>
+            <td>
+                @{ foreach (var category in item.MotoCategories)
+                    {
+                        @category.Category.ID @: @category.Category.CategoryName <br />
+                    } 
+                    }
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Motorcycles Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
             </td>
         </tr>

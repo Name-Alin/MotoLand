@@ -11,7 +11,7 @@ using MotoLand.Models;
 
 namespace MotoLand.Pages.Motorcycles
 {
-    public class EditModel : PageModel
+    public class EditModel : MotoCategoriesPageModel
     {
         private readonly MotoLand.Data.MotoLandContext _context;
 
@@ -31,44 +31,49 @@ namespace MotoLand.Pages.Motorcycles
             }
 
             Motorcycle = await _context.Motorcycle
-                .Include(m => m.DealerMoto).FirstOrDefaultAsync(m => m.ID == id);
+             .Include(b => b.DealerMoto)
+             .Include(b => b.MotoCategories).ThenInclude(b => b.Category)
+             .AsNoTracking()
+             .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Motorcycle == null)
             {
                 return NotFound();
             }
-           ViewData["DealerID"] = new SelectList(_context.Set<DealerMoto>(), "ID", "ID");
+           ViewData["DealerID"] = new SelectList(_context.Set<DealerMoto>(), "ID", "Name");
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id, string[] selectedCategories)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return Page();
+                return NotFound();
             }
-
-            _context.Attach(Motorcycle).State = EntityState.Modified;
-
-            try
+            var motoToUpdate = await _context.Motorcycle
+            .Include(i => i.DealerMoto)
+            .Include(i => i.MotoCategories)
+            .ThenInclude(i => i.Category)
+            .FirstOrDefaultAsync(s => s.ID == id);
+            if (motoToUpdate == null)
             {
+                return NotFound();
+            }
+            if (await TryUpdateModelAsync<Motorcycle>(
+            motoToUpdate,
+            "Moto",
+            i => i.brand, i => i.model,
+            i => i.price, i => i.year, i => i.DealerMoto))
+            {
+                UpdateMotoCategories(_context, selectedCategories, motoToUpdate);
                 await _context.SaveChangesAsync();
+                return RedirectToPage("./Index");
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MotorcycleExists(Motorcycle.ID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
+            UpdateMotoCategories(_context, selectedCategories, motoToUpdate);
+            PopulateAssignedCategoryData(_context, motoToUpdate);
+            return Page();
         }
 
         private bool MotorcycleExists(int id)
